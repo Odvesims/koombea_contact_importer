@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  file_name: 
+  file_line: 
+  contact_name: 
+  error_message: MyString
+
+two:
+  file_name: 
+  file_line: 
+  contact_name: 
+  error_message: MyString

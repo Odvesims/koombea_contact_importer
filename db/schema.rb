@@ -10,10 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_18_124527) do
+ActiveRecord::Schema.define(version: 2021_04_18_131439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "date_of_birth", null: false
+    t.string "phone", null: false
+    t.string "address", null: false
+    t.string "credit_card", null: false
+    t.string "franchise", null: false
+    t.string "email", null: false
+    t.string "card_last4", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "credit_card_franchises", force: :cascade do |t|
+    t.string "name"
+    t.string "iin_ranges"
+    t.integer "min_length"
+    t.integer "max_length"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "failed_contacts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "file_name", null: false
+    t.integer "file_line", null: false
+    t.string "contact_name", null: false
+    t.string "error_message", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "imported_files", force: :cascade do |t|
+    t.string "name"
+    t.string "status"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
