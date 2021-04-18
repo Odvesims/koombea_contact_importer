@@ -38,6 +38,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   
   config.use_transactional_fixtures = false
+=begin
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
   end
@@ -59,7 +60,7 @@ RSpec.configure do |config|
   config.after(:all) do
     DatabaseCleaner.clean
   end
- 
+=end 
   config.include Devise::Test::ControllerHelpers, type: :controller
 
   config.infer_spec_type_from_file_location!
