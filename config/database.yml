@@ -6,6 +6,9 @@ default: &default
   password: <%= Rails.application.credentials.dig(:database_password) %>
   database: koombea_contact
 
+test:
+  <<: *default
+
 development:
   <<: *default
 
