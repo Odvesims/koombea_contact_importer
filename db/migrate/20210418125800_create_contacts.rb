@@ -9,6 +9,8 @@ class CreateContacts < ActiveRecord::Migration[6.0]
       t.string  :franchise,     null: false
       t.string  :email,         null: false
       t.string  :card_last4,    null: false
+      t.integer :user_id,       null: false
+      t.integer :uploadedfile_id 
 
       t.timestamps
     end
