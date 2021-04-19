@@ -7,6 +7,7 @@ class ProcessFileWorker
   def perform(file_id, columns_order, user_id)
     file = UploadedFile.find(file_id)
     file_path = "#{Rails.root}/public/#{file.file}"
+    "puts #{file_path}"
     file.state = "PROCESSING"
     file.save
     i = 0

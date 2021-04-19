@@ -37,7 +37,6 @@ class UploadedFilesController < ApplicationController
       flash[:notice] = 'You made a mistake while selecting the columns. Try again.'
       render 'show'
     end
-    puts "Im running here"
     ProcessFileWorker.perform_async(file_id, columns_order, current_user.id)
   end
 
