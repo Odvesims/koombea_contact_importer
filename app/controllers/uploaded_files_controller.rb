@@ -53,7 +53,7 @@ class UploadedFilesController < ApplicationController
         item = ContactColumn.new(column,column)
         @columns_collection.push(item) if VALID_COLUMNS.include? column  
       end
-      @file_path = "#{Rails.root}/public/#{@uploaded_file.file}"
+      @file_path = "#{Rails.root}/public#{@uploaded_file.file}"
       @file = UploadedFilePreProcessService.new(@file_path).execute
       if @file.count != @columns_collection.count
         flash[:notice] = 'The number of columns is not valid.'
