@@ -26,6 +26,7 @@ class ProcessFileWorker
       i += 1
     end
     contacts = Contact.where("uploadedfile_id = #{file_id}").all
+    sleep 1
     if contacts.count > 0 or (i == 1)
       file.state = "FINISHED" 
     else

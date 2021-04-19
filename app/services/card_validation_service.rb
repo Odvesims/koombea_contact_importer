@@ -14,10 +14,10 @@ class CardValidationService
   private
 
     def validate_card_details
-      cards_iins = CreditCardFranchiseDetail.all
+      cards_iins = CreditCardFranchiseDetail.all.order('creditcardfranchise_id ASC')
       cards_iins.each do |card_info|
         return false if @card_number.length < card_info.characters_count
-        card_substring = (@card_number[0..(card_info.characters_count - 1)]).to_i
+        card_substring = (@card_number[0, card_info.characters_count]).to_i
         card_iin_range = card_info.iin_range.split("-")
         if card_substring.between?(card_iin_range[0].to_i, card_iin_range[1].to_i)
           card_length_range = card_info.length_range.split("-")
