@@ -6,6 +6,6 @@ class FileUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    "uploads/"
+    'uploads'
   end
 end
