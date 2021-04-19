@@ -3,7 +3,7 @@ class CardValidationService
   attr_reader :card_number, :franchise
 
   def initialize(card_number)
-    @card_number = card_number.tr('^0-9', '') .to_s
+    @card_number = card_number
     @franchise = nil
   end
 

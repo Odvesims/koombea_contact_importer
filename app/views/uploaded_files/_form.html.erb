@@ -1,3 +1,6 @@
+<div class="alert alert-danger ml-1" role="alert">
+  <p id="notice" class = "mb-2"><%= notice %></p>
+</div>
 <%= form_with model: @uploaded_file, local: true do |f| %>
   <%= f.file_field :file, class: "form-control-file" %>
   <%= f.submit 'Upload File', class: "btn btn-success mt-1" %>

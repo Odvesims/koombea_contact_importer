@@ -1,0 +1,26 @@
+<h5 class = "mt-2">File has been uploaded. Check the columns to match them with their corresponding one before processing the file</h5>
+  <%= form_with url: process_file_uploaded_file_path(id: @file_id), local:true do |f| %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">File Column</th>
+        <th scope="col">Contact Info Column</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @file.each_with_index do |header, i| %>
+        <%= f.hidden_field :file_id, value: @file_id %>
+        <tr>
+          <td><%= f.text_field :file_column, name: "[uploaded_files][file_colums][file_col#{i}]", id: "file-col#{i}", value: header, class: "form-control" %></td>
+          <td><%= f.select :contact_column, options_from_collection_for_select(@columns_collection, 'id', 'value'), {}, name: "[uploaded_files][contact_columns][contact_col#{i}]", class: "form-control" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center"><%= f.submit 'Process', class: "btn btn-success" %></div>
+<% end %>
+<script>
+  function processFile(){
+    alert('he');
+  } 
+</script>

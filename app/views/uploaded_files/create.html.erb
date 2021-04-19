@@ -1,18 +1,1 @@
-<h5>File has been uploaded. Check the columns to match them with their corresponding one before processing the file</h5>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">File Column</th>
-      <th scope="col">Contact Info Column</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @file.each_with_index do |header, i| %>
-      <tr>
-        <td><%= text_field_tag :file_colum, header, disabled: true, class: "form-control" %></td>
-        <td><%= select_tag :contact_column, options_from_collection_for_select(@columns_collection, 'id', 'value'), class: "form-control" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<div class="d-flex justify-content-center"><button class ="btn btn-primary">Process</button></div>
+<%= render "uploaded_file" %>
