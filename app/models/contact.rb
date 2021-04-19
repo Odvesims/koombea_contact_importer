@@ -2,7 +2,7 @@ class Contact < ApplicationRecord
   self.per_page = 10
   validates :name, :date_of_birth, :phone, :address, :credit_card, :franchise, :email, :card_last4, :uploadedfile_id, presence: true
   validate :name_format, :date_format, :phone_format, :card_format, :email_format, on: :create
-
+  validates_uniqueness_of :email, scope: :user_id
   def date_format
     validation = DateFormatValidationService.new(self.date_of_birth).execute
     errors.add(:date_of_birth, 'Invalid date format') unless validation
