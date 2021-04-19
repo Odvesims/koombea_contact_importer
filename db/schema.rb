@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_18_131439) do
+ActiveRecord::Schema.define(version: 2021_04_18_223711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,20 +26,25 @@ ActiveRecord::Schema.define(version: 2021_04_18_131439) do
     t.string "card_last4", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "file_id", null: false
+  end
+
+  create_table "credit_card_franchise_details", id: :integer, default: -> { "nextval('credit_card_franchises_infos_id_seq'::regclass)" }, force: :cascade do |t|
+    t.integer "creditcardfranchise_id"
+    t.text "iin_range"
+    t.integer "characters_count"
+    t.text "length_range"
   end
 
   create_table "credit_card_franchises", force: :cascade do |t|
     t.string "name"
-    t.string "iin_ranges"
-    t.integer "min_length"
-    t.integer "max_length"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
   create_table "failed_contacts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "file_name", null: false
+    t.integer "file_id", null: false
     t.integer "file_line", null: false
     t.string "contact_name", null: false
     t.string "error_message", null: false
@@ -51,6 +56,13 @@ ActiveRecord::Schema.define(version: 2021_04_18_131439) do
     t.string "name"
     t.string "status"
     t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "uploaded_files", force: :cascade do |t|
+    t.string "title"
+    t.string "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -19,7 +19,7 @@ RSpec.describe Contact, type: :model do
 
   end
 
-  describe "test validations" do
+  describe "validations" do
     before do
       @invalid_contact = FactoryBot.build :contact, :lyanna
     end

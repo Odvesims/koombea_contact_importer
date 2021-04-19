@@ -56,3 +56,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'pg'
 gem 'devise'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+gem 'carrierwave'
