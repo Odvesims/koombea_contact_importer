@@ -1,24 +1,15 @@
-# README
+README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The app can be run live at https://koombea-contact.herokuapp.com
 
-Things you may want to cover:
+New users could be created using email/password of your choice. A test user is available with the following credentials:
 
-* Ruby version
+email: test@noemail.com
+pass: 123456
 
-* System dependencies
+Test CSV files can be found under lib/assets file. There are 4 files that test:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1- A submission with 1 valid contact and 4 invalid contacts
+2- A submitting with all valid contacts
+3- An empty submission
+4- A failed submission
