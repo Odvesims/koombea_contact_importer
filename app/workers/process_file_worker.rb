@@ -4,14 +4,14 @@ class ProcessFileWorker
   sidekiq_options retry: false
   sidekiq_options retry: 0
 
-  def perform(file_id, columns_order, user_id)
+  def perform(file_id, columns_order, user_id, temp_file)
     file = UploadedFile.find(file_id)
     file_path = "#{Rails.root}/public#{file.file}"
-    "puts #{file_path}"
     file.state = "PROCESSING"
     file.save
     i = 0
-    CSV.foreach(file_path) do |row|
+    CSV.foreach(Rails.root.join('public', 'uploads', file.file.current_path)) do |row|
+    #File.open(temp_file, 'rb') { |row|
       if i > 0
         row_arr = row.split(",")
         row_arr = row_arr[0]
@@ -25,6 +25,7 @@ class ProcessFileWorker
       end
       i += 1
     end
+    #}
     contacts = Contact.where("uploadedfile_id = #{file_id}").all
     sleep 1
     if contacts.count > 0 or (i == 1)

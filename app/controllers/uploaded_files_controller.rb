@@ -20,8 +20,9 @@ class UploadedFilesController < ApplicationController
     @uploaded_file = UploadedFile.new(uploaded_file_params)
     @uploaded_file.state = 'ON HOLD'
     @uploaded_file.user_id = current_user.id
+    @temp_file = params[:uploaded_file][:file]
     if @uploaded_file.save
-      uploaded_file(@uploaded_file.id)
+      uploaded_file(@uploaded_file.id, @temp_file)
     end
   end
 
@@ -33,11 +34,11 @@ class UploadedFilesController < ApplicationController
     file_id = params[:file_id]
     columns_order.uniq!
     if columns_order.count != VALID_COLUMNS.count
-      uploaded_file(file_id)
+      uploaded_file(file_id, nil)
       flash[:notice] = 'You made a mistake while selecting the columns. Try again.'
       render 'show'
     end
-    ProcessFileWorker.perform_async(file_id, columns_order, current_user.id)
+    ProcessFileWorker.perform_async(file_id, columns_order, current_user.id, params[:temp_file])
   end
 
   private
@@ -45,7 +46,8 @@ class UploadedFilesController < ApplicationController
       params.require(:uploaded_file).permit(:title, :state, :user_id, :file)
     end
 
-    def uploaded_file(uploaded_file_id)
+    def uploaded_file(uploaded_file_id, temp_file)
+      @temp_file = temp_file
       @file_id = uploaded_file_id
       @uploaded_file = UploadedFile.find(@file_id)
       @columns_collection = []
@@ -54,7 +56,7 @@ class UploadedFilesController < ApplicationController
         @columns_collection.push(item) if VALID_COLUMNS.include? column  
       end
       @file_path = "#{Rails.root}/public#{@uploaded_file.file}"
-      @file = UploadedFilePreProcessService.new(@file_path).execute
+      @file = UploadedFilePreProcessService.new(@temp_file).execute
       if @file.count != @columns_collection.count
         flash[:notice] = 'The number of columns is not valid.'
         redirect_to new_uploaded_file_path

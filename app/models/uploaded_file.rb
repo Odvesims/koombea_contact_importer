@@ -1,3 +1,3 @@
 class UploadedFile < ApplicationRecord
-  mount_uploader :file, FileUploader
+  has_one_attached :file
 end

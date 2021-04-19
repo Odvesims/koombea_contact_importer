@@ -58,3 +58,4 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'carrierwave'
 gem 'sidekiq'
+gem "aws-sdk-s3", require: false

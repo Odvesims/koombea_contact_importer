@@ -1,5 +1,6 @@
 <h5 class = "mt-2">File has been uploaded. Check the columns to match them with their corresponding one before processing the file</h5>
   <%= form_with url: process_file_uploaded_file_path(id: @file_id), local:true do |f| %>
+    <%= f.hidden_field :temp_file, value: @temp_file.path %>
   <table class="table">
     <thead>
       <tr>
@@ -19,8 +20,3 @@
   </table>
   <div class="d-flex justify-content-center"><%= f.submit 'Process', class: "btn btn-success" %></div>
 <% end %>
-<script>
-  function processFile(){
-    alert('he');
-  } 
-</script>
