@@ -13,4 +13,9 @@ development:
   <<: *default
 
 production:
-  <<: *default
+  adapter: postgresql
+  host: <%= Rails.application.credentials.dig(:production_database_host) %>
+  port: 5432
+  username: <%= Rails.application.credentials.dig(:production_database_user) %>
+  password: <%= Rails.application.credentials.dig(:production_database_pass) %>
+  database: <%= Rails.application.credentials.dig(:production_database_name) %>
