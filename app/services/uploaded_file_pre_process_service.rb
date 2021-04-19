@@ -1,16 +1,16 @@
 class UploadedFilePreProcessService
 
-  attr_accessor :file_header, :file_path
+  attr_accessor :file_header, :file_id
 
-  def initialize(file_path)
-    @file_path = file_path
+  def initialize(file_id)
+    @file_id = file_id
     @file_header = []
   end
 
   def execute() 
-    CSV.foreach(file_path) do |row|
+    uploaded_file = UploadedFile.find(file_id)
+    CSV.parse(uploaded_file.main_file.download) do |row|
       file_header.push(row)
-      break
     end
     @file_header = file_header[0]
   end
