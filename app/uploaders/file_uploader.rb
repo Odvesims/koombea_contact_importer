@@ -6,6 +6,10 @@ class FileUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    'uploads'
+    if Rails.env.production?
+      '../app/public/uploads'
+    else
+      'uploads'
+    end
   end
 end
