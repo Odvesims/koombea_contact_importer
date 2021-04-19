@@ -1,5 +1,6 @@
 class UploadedFilesController < ApplicationController
   require 'csv'
+  require "#{Rails.root}/lib/contact_column.rb"
   before_action :authenticate_user!
 
   def new
@@ -7,17 +8,17 @@ class UploadedFilesController < ApplicationController
   end
 
   def create
-    @file_header = Array.new
     @uploaded_file = UploadedFile.new(uploaded_file_params)
     @uploaded_file.state = 'ON HOLD'
     @uploaded_file.user_id = current_user.id
-    @uploaded_file.save
-    @contact_columns = {}
-    CSV.foreach("#{Rails.root}/public/#{@uploaded_file.file}") do |row|
-      @file_header.push(row)
-      break
+    if @uploaded_file.save
+      @columns_collection = []
+      (Contact.column_names).each do |column|
+        item = ContactColumn.new(column,column)
+        @columns_collection.push(item)
+      end
+      @file = UploadedFilePreProcessService.new("#{Rails.root}/public/#{@uploaded_file.file}").execute
     end
-    @file_header = @file_header[0]
   end
 
   private
