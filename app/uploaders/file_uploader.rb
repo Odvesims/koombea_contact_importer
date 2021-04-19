@@ -4,4 +4,8 @@ class FileUploader < CarrierWave::Uploader::Base
   def extension_allowlist
     %w(csv)
   end
+
+  def store_dir
+    "uploads/"
+  end
 end
