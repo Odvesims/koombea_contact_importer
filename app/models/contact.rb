@@ -1,13 +1,16 @@
 class Contact < ApplicationRecord
-  validates :name, :date_of_birth, :phone, :address, :credit_card, :franchise, :email, :card_last4, presence: true
-  validate :name_format, :date_format, :phone_format, :card_format, :email_format
+  self.per_page = 10
+  validates :name, :date_of_birth, :phone, :address, :credit_card, :franchise, :email, :card_last4, :uploadedfile_id, presence: true
+  validate :name_format, :date_format, :phone_format, :card_format, :email_format, on: :create
 
   def date_format
-    DateFormatValidationService.new(self.date_of_birth).execute
+    validation = DateFormatValidationService.new(self.date_of_birth).execute
+    errors.add(:date_of_birth, 'Invalid date format') unless validation
   end
 
   def name_format
-    return self.name.match?(/\A[a-zA-Z- ]*\z/) ? true : false
+    validation = self.name.match?(/\A[a-zA-Z- ]*\z/) ? true : false
+    errors.add(:name, 'Invalid name format') unless validation
   end
 
   def card_format
@@ -15,11 +18,13 @@ class Contact < ApplicationRecord
   end
 
   def email_format
-    return self.email.match?(/^[\+A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i) ? true : false
+    validation =  self.email.match?(/^[\+A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i) ? true : false
+    errors.add(:email, 'Invalid email format') unless validation
   end
 
   def phone_format
-    PhoneFormatValidationService.new(self.phone).execute
+    validation = PhoneFormatValidationService.new(self.phone).execute
+    errors.add(:phone, 'Invalid phone format') unless validation
   end
 
 end

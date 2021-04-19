@@ -17,7 +17,7 @@ RSpec.describe DateFormatValidationService, type: :service do
 
   describe "invalid date format" do
     before do
-      @bad_date = DateFormatValidationService.new('20200230')
+      @bad_date = DateFormatValidationService.new('20200030')
     end
     it "returns false for an invalid date" do
       expect(@bad_date.execute).to eq(false) 

@@ -1,3 +1,29 @@
 <h1>Contacts</h1>
 <%= link_to "Upload Contacts", new_uploaded_file_path, class: "btn btn-primary" %>
 <%= will_paginate @contacts, renderer: BootstrapPagination::Rails %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Date of Birth</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Address</th>
+      <th scope="col">Email</th>
+      <th scope="col">Card_Last4</th>
+      <th scope="col">Franchise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= contact.name %></td>
+        <td><%= contact.date_of_birth.to_date.strftime("%Y %B %-d") %></td>
+        <td><%= contact.phone %></td>
+        <td><%= contact.address %></td>
+        <td><%= contact.email %></td>
+        <td><%= contact.card_last4 %></td>
+        <td><%= contact.franchise %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

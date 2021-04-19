@@ -5,7 +5,7 @@ class UploadedFilesController < ApplicationController
   VALID_COLUMNS = ["name", "date_of_birth", "phone", "address", "credit_card", "email"]
 
   def index
-    redirect_back(fallback_location: root_path)
+    @uploaded_files = UploadedFile.where(:user_id => current_user.id).paginate(:page => params[:page]).order('id DESC')
   end
 
   def new

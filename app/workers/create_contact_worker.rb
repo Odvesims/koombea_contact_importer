@@ -4,13 +4,12 @@ class CreateContactWorker
   sidekiq_options retry: 0
 
   def perform(name, date_of_birth, phone, address, credit_card, email, file_id, line, user_id)
-    puts "Im performing this job #{credit_card}"
     card_franchise = CardValidationService.new(credit_card).execute
     if card_franchise.nil?
-      failed_contact(user_id, file_id, line, name, "Invalid Credit Card").save
+      failed_contact(user_id, file_id, line, name, "Validation Failed: Invalid/Unsupported Credit Card").save
       return;
     end
-    new_contact = succesful_contact(name, date_of_birth, phone, address, credit_card, email, card_franchise, user_id)
+    new_contact = succesful_contact(name, date_of_birth, phone, address, credit_card, email, card_franchise, user_id, file_id)
     begin
       new_contact.save!
     rescue Exception => e
@@ -18,7 +17,7 @@ class CreateContactWorker
     end
   end
 
-  def succesful_contact(name, date_of_birth, phone, address, credit_card, email, card_franchise, user_id)
+  def succesful_contact(name, date_of_birth, phone, address, credit_card, email, card_franchise, user_id, file_id)
     new_contact = Contact.new
     new_contact.name = name
     new_contact.date_of_birth = date_of_birth
@@ -29,6 +28,7 @@ class CreateContactWorker
     new_contact.franchise = card_franchise
     new_contact.card_last4 = credit_card.split(//).last(4).join
     new_contact.user_id = user_id
+    new_contact.uploadedfile_id = file_id
     new_contact
   end
 

@@ -1,0 +1,20 @@
+<h1>Failed Contacts</h1>
+<%= will_paginate @contacts, renderer: BootstrapPagination::Rails %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">File Name</th>
+      <th scope="col">File Line</th>
+      <th scope="col">Error Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= contact.file_name %></td>
+        <td><%= contact.file_line %></td>
+        <td><%= contact.error_message %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

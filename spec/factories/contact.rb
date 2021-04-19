@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :contact do
     trait :lyanna do
       name { 'L&ana Stark' }
-      date_of_birth { '19220230' }
+      date_of_birth { '19220030' }
       phone { '123456778' }
       address { 'Winterfell' }
       credit_card { 'las8sd7zal10238d' }

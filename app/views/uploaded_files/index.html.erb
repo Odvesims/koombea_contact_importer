@@ -1,0 +1,30 @@
+<h1>UploadedFiles</h1>
+<%= will_paginate @uploaded_files, renderer: BootstrapPagination::Rails %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">File Name</th>
+      <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @uploaded_files.each do |file| %>
+      <tr>
+        <td><%= file.id %></td>
+        <td><%= file.file.to_s.gsub("/uploads/", "") %></td>
+        <% case file.state %>
+          <% when 'ON HOLD' %>
+            <td class = "bg-secondary">
+          <% when 'PROCESSING' %>
+            <td class = "bg-info">
+          <% when 'FINISHED' %>
+            <td class = "bg-success">
+          <% when 'FAILED' %>
+            <td class = "bg-danger">
+        <% end %>
+        <%= file.state %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
