@@ -2,7 +2,7 @@ class UploadedFilesController < ApplicationController
   require 'csv'
   require "#{Rails.root}/lib/contact_column.rb"
   before_action :authenticate_user!
-  VALID_COLUMNS = ["name", "date_of_birth", "phone", "address", "credit_card", "email"]
+  VALID_COLUMNS = ["name", "date_of_birth", "phone", "address", "credit_card", "email", "lastname"]
 
   def index
     @uploaded_files = UploadedFile.where(:user_id => current_user.id).paginate(:page => params[:page]).order('id DESC')
@@ -27,12 +27,16 @@ class UploadedFilesController < ApplicationController
 
   def process_file
     columns_order = []
+    file_columns = []
     params[:uploaded_files]["contact_columns"].each do |key, value|
-      columns_order.push(value)
+      columns_order.push(value.gsub(" ", ""))
+    end
+    params[:uploaded_files]["file_colums"].each do |key, value|
+      file_columns.push(value.gsub(" ", ""))
     end
     file_id = params[:file_id]
     columns_order.uniq!
-    if columns_order.count != VALID_COLUMNS.count
+    if columns_order.count != file_columns.count
       uploaded_file(file_id)
       flash[:notice] = 'You made a mistake while selecting the columns. Try again.'
       render 'show'
