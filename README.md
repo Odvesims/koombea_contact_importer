@@ -1,6 +1,6 @@
 README
 
-The app can be run live at https://koombea-contact.herokuapp.com
+The app can be run live at https://koombea-contact.herokuapp.com (It might take a while to load sometimes do to Heroku's free tier limits)
 
 New users could be created using email/password of your choice. A test user is available with the following credentials:
 
